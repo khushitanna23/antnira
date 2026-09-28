@@ -134,38 +134,62 @@
   line-height: 1.6;
 }
 
-/* Customer logos grid */
-.customer-logos {
+/* Customer reviews */
+.customer-reviews {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
   margin-top: 40px;
 }
 
-.customer-logo-card {
+.customer-review {
   background: var(--bg-white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
-  padding: 40px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 140px;
-  transition: all var(--transition-base);
+  overflow: hidden;
 }
 
-.customer-logo-card:hover {
+.customer-review:hover {
   border-color: var(--brand-yellow);
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
-.customer-logo-placeholder {
+.customer-review-photo {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-light-blue);
+}
+
+.customer-review-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.customer-review:hover .customer-review-photo img { transform: scale(1.04); }
+
+.customer-review-copy { padding: 24px 28px 28px; }
+
+.customer-review-quote {
+  display: block;
+  height: 32px;
+  color: var(--brand-yellow);
   font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.customer-review-copy p {
+  margin: 10px 0 20px;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.customer-review-detail {
   color: var(--text-secondary);
-  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 /* Gallery Grid */
@@ -599,10 +623,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .customer-logos {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .about-page-links { grid-template-columns: repeat(2, 1fr); }
   .workshop-process-grid { grid-template-columns: repeat(2, 1fr); }
   .workshop-gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -626,9 +646,7 @@
     grid-template-columns: 1fr;
   }
 
-  .customer-logos {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .customer-reviews { grid-template-columns: 1fr; gap: 20px; }
 
   .gallery-grid {
     grid-template-columns: 1fr 1fr;

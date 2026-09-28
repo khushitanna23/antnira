@@ -131,7 +131,7 @@
 }
 
 .product-image-slide {
-  height: 260px;
+  height: 340px;
   overflow: hidden;
   background: var(--bg-light);
 }
@@ -204,6 +204,10 @@
 
   .hero-image {
     height: 260px;
+  }
+
+  .product-image-slide {
+    height: 290px;
   }
 
   .hero-cta-row {

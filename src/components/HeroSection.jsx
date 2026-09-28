@@ -7,7 +7,6 @@ import productImage2 from '../assets/Products/product-2.jpg';
 import productImage3 from '../assets/Products/product-3.jpg';
 import productImage4 from '../assets/Products/product-4.jpg';
 import productImage5 from '../assets/Products/product-5.jpg';
-import productImage6 from '../assets/Products/product-6.jpg';
 import productImage7 from '../assets/Products/product-7.jpg';
 import productImage8 from '../assets/Products/product-8.jpg';
 import productImage9 from '../assets/Products/product-9.jpg';
@@ -52,7 +51,6 @@ const productImages = [
   productImage3,
   productImage4,
   productImage5,
-  productImage6,
   productImage7,
   productImage8,
   productImage9,
@@ -91,8 +89,8 @@ export default function HeroSection() {
               Trust line: Custom Development • Bulk Production • Quality Control • Worldwide Delivery
             </div>
             <div className="hero-cta-row">
-              <Link to="/contact" className="btn btn-primary">CTA 1: Discuss Your Requirement</Link>
-              <Link to="/workshop" className="btn btn-outline">CTA 2: View Products</Link>
+              <Link to="/contact" className="btn btn-primary">Discuss Your Requirement</Link>
+              <Link to="/workshop" className="btn btn-outline">View Products</Link>
             </div>
           </div>
         </div>
@@ -119,13 +117,13 @@ export default function HeroSection() {
               autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false }}
               freeMode={{ enabled: true, momentum: false }}
               spaceBetween={16}
-              slidesPerView={3}
+              slidesPerView={2.5}
               breakpoints={{
                 0: { slidesPerView: 1.2, spaceBetween: 12 },
                 480: { slidesPerView: 1.6, spaceBetween: 12 },
-                768: { slidesPerView: 2.2, spaceBetween: 16 },
-                1024: { slidesPerView: 3, spaceBetween: 16 },
-                1280: { slidesPerView: 4, spaceBetween: 16 },
+                768: { slidesPerView: 1.8, spaceBetween: 16 },
+                1024: { slidesPerView: 2.2, spaceBetween: 16 },
+                1280: { slidesPerView: 3, spaceBetween: 16 },
               }}
             >
               {productImages.map((image, index) => (

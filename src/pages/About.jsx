@@ -8,14 +8,14 @@ import ContactForm from '../components/ContactForm';
 import './Pages.css';
 
 const advantages = [
-  'Export-Focused Manufacturing',
+  'Quality Assurance Long term Business Vision',
   'International Quality Standards',
   'OEM & Private Label Solutions',
   'Flexible MOQ',
   'Custom Branding & Packaging',
   'Reliable Global Shipping',
   'Dedicated Quality Inspection',
-  'Professional Export Documentation',
+  'Explore Before you Buy Eco-Friendly Practies',
 ];
 
 const pageLinks = [
