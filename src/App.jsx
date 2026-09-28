@@ -13,6 +13,7 @@ import Customers from './pages/Customers';
 import CSR from './pages/CSR';
 import Contact from './pages/Contact';
 import Dealership from './pages/Dealership';
+import { Analytics } from '@vercel/analytics/react';
 
 function ScrollToTopOnNav() {
   const { pathname } = useLocation();
@@ -40,6 +41,7 @@ function App() {
           <Route path="/dealership" element={<Dealership />} />
         </Routes>
       </main>
+      <Analytics />
       <Footer />
       <WhatsAppWidget />
       <ScrollToTop />
