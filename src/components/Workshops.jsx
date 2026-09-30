@@ -22,6 +22,10 @@ const workshopLabels = [
   'Custom T-Shirts',
   'Workwear Production',
   'Hospitality Uniforms',
+  'Private Label Apparel',
+  'Export Quality Finishing',
+  'Apparel Development',
+  'Bulk Packaging',
 ];
 
 const workshopImages = [
@@ -47,7 +51,7 @@ export default function Workshops() {
             <h2>Apparel Built for Global Markets</h2>
           </div>
           <Link to="/workshop" className="explore-link">
-            Explore More <ArrowUpRight size={18} />
+            Explore All Facilities <ArrowUpRight size={18} />
           </Link>
         </div>
 
@@ -55,17 +59,17 @@ export default function Workshops() {
           <Swiper
             modules={[Autoplay, FreeMode]}
             loop
-            speed={5500}
-            autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false }}
+            speed={4500}
+            autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
             freeMode={{ enabled: true, momentum: false }}
             spaceBetween={20}
-            slidesPerView={4}
+            slidesPerView={3.8}
             breakpoints={{
-              0: { slidesPerView: 1.2, spaceBetween: 12 },
-              480: { slidesPerView: 1.8, spaceBetween: 16 },
-              768: { slidesPerView: 2.5, spaceBetween: 16 },
+              0: { slidesPerView: 1.3, spaceBetween: 14 },
+              480: { slidesPerView: 1.9, spaceBetween: 16 },
+              768: { slidesPerView: 2.8, spaceBetween: 18 },
               1024: { slidesPerView: 3.5, spaceBetween: 20 },
-              1280: { slidesPerView: 4, spaceBetween: 20 },
+              1280: { slidesPerView: 4, spaceBetween: 22 },
             }}
           >
             {workshopImages.map((image, index) => (
@@ -74,13 +78,18 @@ export default function Workshops() {
                   <img
                     className="workshop-slide-bg"
                     src={image}
-                    alt={`${workshopLabels[index % workshopLabels.length]} manufacturing`} 
+                    alt={`${workshopLabels[index % workshopLabels.length]} manufacturing`}
                   />
+                  <div className="workshop-slide-scrim"></div>
+                  <div className="workshop-slide-info">
+                    <span className="workshop-slide-pill">
+                      {workshopLabels[index % workshopLabels.length]}
+                    </span>
+                  </div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-
         </div>
       </div>
     </section>

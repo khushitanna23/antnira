@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
-import logo from '../assets/logo.jpeg';
+import { ArrowUpRight, X, Phone, Mail, MapPin } from 'lucide-react';
+import logo from '../assets/logo-white.png';
 import './Navbar.css';
 
 const navItems = [
@@ -25,22 +25,23 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
+  const toggleMenu = () => {
+    const nextState = !isOpen;
+    setIsOpen(nextState);
+    document.body.style.overflow = nextState ? 'hidden' : '';
+  };
+
+  const closeMenu = () => {
     setIsOpen(false);
     document.body.style.overflow = '';
-  }, [location]);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    document.body.style.overflow = isOpen ? '' : 'hidden';
   };
 
   return (
-    <div className={`navbar-wrapper ${scrolled ? 'scrolled' : ''}`}>
+    <header className={`navbar-wrapper ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
-        <nav className="navbar">
+        <nav className="navbar" aria-label="Main Navigation">
           <Link to="/" className="nav-logo">
-            <img className="nav-logo-image" src={logo} alt="Antnira" />
+            <img className="nav-logo-image" src={logo} alt="Antnira Group" />
             <span className="nav-logo-tagline">Committed to Your Growth</span>
           </Link>
 
@@ -56,42 +57,78 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="nav-cta-wrapper">
+          <div className="nav-actions">
             <Link to="/contact" className="nav-cta">
-              Get in Touch <ArrowUpRight size={16} />
+              <span>Get in Touch</span>
+              <span className="nav-cta-arrow">
+                <ArrowUpRight size={15} />
+              </span>
             </Link>
-          </div>
 
-          <button
-            className={`nav-toggle ${isOpen ? 'open' : ''}`}
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+            <button
+              className={`nav-toggle ${isOpen ? 'open' : ''}`}
+              onClick={toggleMenu}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isOpen}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
         </nav>
       </div>
 
+      {/* Offcanvas Mobile & Quick Drawer */}
       <div
         className={`nav-mobile-overlay ${isOpen ? 'open' : ''}`}
-        onClick={toggleMenu}
+        onClick={closeMenu}
+        aria-hidden="true"
       />
-      <div className={`nav-mobile-drawer ${isOpen ? 'open' : ''}`}>
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
-          >
-            {item.label}
+      <aside className={`nav-mobile-drawer ${isOpen ? 'open' : ''}`}>
+        <div className="drawer-header">
+          <Link to="/" className="drawer-logo" onClick={closeMenu}>
+            <img src={logo} alt="Antnira Group" />
+            <span className="drawer-tagline">Committed to Your Growth</span>
           </Link>
-        ))}
-        <Link to="/contact" className="nav-cta">
-          Get in Touch <ArrowUpRight size={16} />
-        </Link>
-      </div>
-    </div>
+          <button className="drawer-close-btn" onClick={closeMenu} aria-label="Close navigation">
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="drawer-nav">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`drawer-link ${location.pathname === item.path ? 'active' : ''}`}
+              onClick={closeMenu}
+            >
+              {item.label}
+              <ArrowUpRight size={16} className="drawer-link-arrow" />
+            </Link>
+          ))}
+        </div>
+
+        <div className="drawer-cta-wrapper">
+          <Link to="/contact" className="btn btn-primary w-100" onClick={closeMenu}>
+            Discuss Your Requirement <ArrowUpRight size={16} />
+          </Link>
+        </div>
+
+        <div className="drawer-contact-box">
+          <h5>Quick Contact</h5>
+          <a href="tel:+918799608484" className="drawer-contact-item">
+            <Phone size={15} /> +91 8799608484
+          </a>
+          <a href="mailto:connect@antnira.com" className="drawer-contact-item">
+            <Mail size={15} /> connect@antnira.com
+          </a>
+          <span className="drawer-contact-item">
+            <MapPin size={15} /> Surat &amp; Lindiad, Gujarat, India
+          </span>
+        </div>
+      </aside>
+    </header>
   );
 }

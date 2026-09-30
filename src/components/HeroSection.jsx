@@ -1,196 +1,189 @@
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode } from 'swiper/modules';
-import heroBuilding from '../assets/heroBuilding.png';
-import productImage1 from '../assets/Products/product-1.jpg';
-import productImage2 from '../assets/Products/product-2.jpg';
-import productImage3 from '../assets/Products/product-3.jpg';
-import productImage4 from '../assets/Products/product-4.jpg';
-import productImage5 from '../assets/Products/product-5.jpg';
-import productImage7 from '../assets/Products/product-7.jpg';
-import productImage8 from '../assets/Products/product-8.jpg';
-import productImage9 from '../assets/Products/product-9.jpg';
-import productImage10 from '../assets/Products/product-10.jpg';
-import productImage11 from '../assets/Products/product-11.jpg';
-import productImage12 from '../assets/Products/product-12.jpg';
-import productImage13 from '../assets/Products/product-13.jpg';
-import productImage14 from '../assets/Products/product-14.jpg';
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
+import { ArrowUpRight, ArrowLeft, ArrowRight, ShieldCheck, Factory, CheckCircle2, Globe } from 'lucide-react';
 import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+
+import heroBuilding from '../assets/heroBuilding.png';
+import facilityImage from '../assets/Apparel Built for Global Markets/20250226_103641.jpg';
+import workshopImage from '../assets/Apparel Built for Global Markets/20250226_103957.jpg';
+
 import './HeroSection.css';
 
-const productCategories = [
+const slides = [
   {
-    title: 'Healthcare Apparel',
-    items: ['Medical Scrubs', 'Doctor Coats', 'Patient Uniforms', 'Medical Aprons', 'Hospital Workwear'],
+    subtitle: 'Committed to Your Growth',
+    titleLine1: 'Apparel Made',
+    titleLine2: 'Around Your',
+    titleLine3: 'Requirements.',
+    description: 'We manufacture custom apparel, uniforms and textile products for brands, businesses, healthcare organizations and institutions.',
+    image: heroBuilding,
+    badge: 'Antnira Manufacturing Unit • Surat & Lindiad, Gujarat',
+    trustLine: [
+      { icon: ShieldCheck, text: 'Custom Development' },
+      { icon: Factory, text: 'Bulk Production' },
+      { icon: CheckCircle2, text: 'Quality Control' },
+      { icon: Globe, text: 'Worldwide Delivery' },
+    ],
   },
   {
-    title: 'Corporate & Workwear',
-    items: ['Corporate T-Shirts', 'Polo Shirts', 'Workwear', 'Security Uniforms', 'Institutional Uniforms'],
+    subtitle: 'Manufacturing Excellence',
+    titleLine1: 'Uniforms, Scrubs',
+    titleLine2: '& Workwear',
+    titleLine3: 'Solutions.',
+    description: 'From fabric selection and product development to production, quality inspection and final delivery, we manage the process around your exact requirements.',
+    image: facilityImage,
+    badge: 'Precision Stitching • Hospital Scrubs & Institutional Wear',
+    trustLine: [
+      { icon: ShieldCheck, text: 'Approved Specs' },
+      { icon: Factory, text: 'Technical Fabrics' },
+      { icon: CheckCircle2, text: 'Strict Inspection' },
+      { icon: Globe, text: 'Timely Dispatch' },
+    ],
   },
   {
-    title: 'Casual Apparel',
-    items: ['T-Shirts', 'Hoodies', 'Sweatshirts', 'Joggers', 'Kidswear'],
+    subtitle: 'Global Export & OEM/ODM',
+    titleLine1: 'Custom Apparel',
+    titleLine2: '& Private Label',
+    titleLine3: 'Programs.',
+    description: 'Flexible apparel manufacturing, OEM & ODM capabilities, custom branding, and scalable production built to support international brands.',
+    image: workshopImage,
+    badge: 'Global Export Partner • Serving 20+ International Markets',
+    trustLine: [
+      { icon: ShieldCheck, text: 'Flexible MOQs' },
+      { icon: Factory, text: 'Custom Branding' },
+      { icon: CheckCircle2, text: 'Full Certification' },
+      { icon: Globe, text: 'Global Shipping' },
+    ],
   },
-  {
-    title: 'Custom Apparel',
-    items: ['Private Label', 'Custom Designs', 'Custom Fabric', 'Custom Colors', 'Custom Branding'],
-  },
-];
-
-const processSteps = [
-  'Design, fabric, GSM, color, sizing, quantity and application.',
-  'Fabric selection, construction, trims, measurements and samples.',
-  'Bulk production according to approved specifications.',
-  'Measurements, stitching, fabric shade, finishing and packaging checks.',
-  'Finished goods packed and prepared according to delivery requirements.',
-];
-
-const productImages = [
-  productImage1,
-  productImage2,
-  productImage3,
-  productImage4,
-  productImage5,
-  productImage7,
-  productImage8,
-  productImage9,
-  productImage10,
-  productImage11,
-  productImage12,
-  productImage13,
-  productImage14,
 ];
 
 export default function HeroSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef(null);
+
+  const handlePrev = () => {
+    if (swiperRef.current) swiperRef.current.slidePrev();
+  };
+
+  const handleNext = () => {
+    if (swiperRef.current) swiperRef.current.slideNext();
+  };
+
   return (
-    <section className="hero-section">
-      <div className="container">
-        <div className="hero-top reveal">
-          <div className="hero-top-left">
-            <span className="pill-badge">Committed to Your Growth</span>
-            <h1>Apparel Made Around Your Requirements.</h1>
-          </div>
-        </div>
-
-        <div className="hero-content">
-          <div className="hero-image reveal-left">
-            <img src={heroBuilding} alt="Antnira Group building" />
-          </div>
-          <div className="hero-text reveal-right">
-            <p>
-              We manufacture custom apparel, uniforms and textile products for brands, businesses,
-              healthcare organizations and institutions.
-            </p>
-            <p>
-              From fabric selection and product development to production, quality inspection and final
-              delivery, we manage the process around your exact requirements.
-            </p>
-            <div className="hero-trust-line">
-              Trust line: Custom Development • Bulk Production • Quality Control • Worldwide Delivery
+    <section className="hero-slider-section">
+      <Swiper
+        modules={[Autoplay, EffectFade, Navigation]}
+        effect="fade"
+        speed={1000}
+        loop={true}
+        autoplay={{
+          delay: 6000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => {
+          setActiveIndex(swiper.realIndex);
+        }}
+        className="hero-swiper"
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <div className="hero-slide-bg">
+              <img src={slide.image} alt={slide.titleLine1} className="hero-slide-img" />
+              <div className="hero-slide-overlay" />
             </div>
-            <div className="hero-cta-row">
-              <Link to="/contact" className="btn btn-primary">Discuss Your Requirement</Link>
-              <Link to="/workshop" className="btn btn-outline">View Products</Link>
-            </div>
-          </div>
-        </div>
 
-        <div className="home-content-block reveal">
-          <h3>What We Make</h3>
-          <div className="what-we-make-grid">
-            {productCategories.map((group) => (
-              <div className="make-group" key={group.title}>
-                <h4>{group.title}</h4>
-                <p>{group.items.join(' • ')}</p>
+            <div className="container hero-slide-container">
+              <div className="hero-slide-content">
+                <div className="hero-slide-subtitle-box">
+                  <span className="hero-slide-subtitle">
+                    <span className="hero-subtitle-dot"></span>
+                    {slide.subtitle}
+                  </span>
+                </div>
+
+                <h1 className="hero-slide-title">
+                  <span>{slide.titleLine1}</span>
+                  <span>{slide.titleLine2}</span>
+                  <span className="hero-title-accent">{slide.titleLine3}</span>
+                </h1>
+
+                <p className="hero-slide-desc">{slide.description}</p>
+
+                <div className="hero-slide-trust">
+                  {slide.trustLine.map((item, idx) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <div key={idx} className="hero-trust-item">
+                        <IconComponent size={16} className="hero-trust-icon" />
+                        <span>{item.text}</span>
+                        {idx < slide.trustLine.length - 1 && <span className="hero-trust-sep">•</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="hero-slide-actions">
+                  <Link to="/contact" className="btn btn-primary hero-cta-btn">
+                    <span>Discuss Your Requirement</span>
+                    <span className="hero-cta-arrow">
+                      <ArrowUpRight size={16} />
+                    </span>
+                  </Link>
+
+                  <Link to="/workshop" className="btn-circle hero-circle-btn">
+                    <span>View Products</span>
+                    <span className="btn-circle-icon">
+                      <ArrowUpRight size={18} />
+                    </span>
+                  </Link>
+                </div>
               </div>
-            ))}
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Bottom Slider Bar with Fraction & Arrows (Ijaro Reference Layout) */}
+      <div className="hero-slider-bottom-bar">
+        <div className="container hero-bottom-container">
+          <div className="hero-fraction-box">
+            <span className="hero-fraction-current">
+              {String(activeIndex + 1).padStart(2, '0')}
+            </span>
+            <div className="hero-progress-track">
+              <div
+                className="hero-progress-fill"
+                style={{ width: `${((activeIndex + 1) / slides.length) * 100}%` }}
+              />
+            </div>
+            <span className="hero-fraction-total">
+              {String(slides.length).padStart(2, '0')}
+            </span>
           </div>
-          <div className="product-images-heading reveal">
-            <span className="pill-badge">Antnira Collection</span>
-            <h4>Product Images</h4>
-          </div>
-          <div className="product-images-slider reveal">
-            <Swiper
-              modules={[Autoplay, FreeMode]}
-              loop
-              speed={3000}
-              autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false }}
-              freeMode={{ enabled: true, momentum: false }}
-              spaceBetween={16}
-              slidesPerView={2.5}
-              breakpoints={{
-                0: { slidesPerView: 1.2, spaceBetween: 12 },
-                480: { slidesPerView: 1.6, spaceBetween: 12 },
-                768: { slidesPerView: 1.8, spaceBetween: 16 },
-                1024: { slidesPerView: 2.2, spaceBetween: 16 },
-                1280: { slidesPerView: 3, spaceBetween: 16 },
-              }}
+
+          <div className="hero-arrow-box">
+            <button
+              className="hero-nav-arrow"
+              onClick={handlePrev}
+              aria-label="Previous slide"
             >
-              {productImages.map((image, index) => (
-                <SwiperSlide key={`${image}-${index}`}>
-                  <div className="product-image-slide">
-                    <img src={image} alt={`Antnira product image ${index + 1}`} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-
-        <div className="home-content-block reveal">
-          <h3>Problems We Solve</h3>
-          <div className="problem-list">
-            <div className="problem-item">
-              <strong>Inconsistent Quality</strong>
-              <span>Our approach: Approved specifications and quality checks throughout production.</span>
-            </div>
-            <div className="problem-item">
-              <strong>Fabric Shade Differences</strong>
-              <span>Our approach: Fabric/shade approval before bulk production.</span>
-            </div>
-            <div className="problem-item">
-              <strong>Poor Stitching &amp; Finishing</strong>
-              <span>Our approach: Inspection of measurements, stitching and finishing.</span>
-            </div>
-            <div className="problem-item">
-              <strong>Production Delays</strong>
-              <span>Our approach: Production planning and progress monitoring.</span>
-            </div>
-            <div className="problem-item">
-              <strong>Communication Problems</strong>
-              <span>Our approach: Clear coordination from sampling through final delivery.</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="home-content-block reveal">
-          <h3>We Have a Requirement. We Build Around It.</h3>
-          <ol className="requirement-list">
-            {processSteps.map((step, index) => (
-              <li key={step}><span>{index + 1}.</span> {step}</li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="home-content-block reveal">
-          <h3>Manufacturing Capabilities</h3>
-          <div className="capability-groups">
-            <div className="capability-group">
-              <h4>Fabric Development</h4>
-              <p>Cotton • Polyester • Viscose • Blends • Knits • Stretch Fabrics</p>
-            </div>
-            <div className="capability-group">
-              <h4>Product Development</h4>
-              <p>Tech packs • Measurements • Samples • Color matching • Branding</p>
-            </div>
-            <div className="capability-group">
-              <h4>Production</h4>
-              <p>T-Shirts • Polo Shirts • Scrubs • Uniforms • Hoodies • Workwear</p>
-            </div>
-            <div className="capability-group">
-              <h4>Finishing</h4>
-              <p>Printing • Embroidery • Labels • Washing • Packaging</p>
-            </div>
+              <ArrowLeft size={20} />
+            </button>
+            <button
+              className="hero-nav-arrow"
+              onClick={handleNext}
+              aria-label="Next slide"
+            >
+              <ArrowRight size={20} />
+            </button>
           </div>
         </div>
       </div>

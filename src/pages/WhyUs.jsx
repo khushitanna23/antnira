@@ -1,6 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import PageBanner from '../components/PageBanner';
-import WhyChooseUs from '../components/WhyChooseUs';
 import StatsSection from '../components/StatsSection';
 import ContactForm from '../components/ContactForm';
 import qualityControlImage from '../assets/WhyUs/quality-controll.jpg';

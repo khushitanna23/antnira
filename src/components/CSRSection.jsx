@@ -1,8 +1,10 @@
-import './CSRSection.css';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import communityOutreach from '../assets/Long-Term Partnerships/community-outreach.jpg';
 import educationSupport from '../assets/Long-Term Partnerships/Education Support.png';
 import environmentalDrive from '../assets/Long-Term Partnerships/Environmental Drive.jpg';
 import healthcareInitiative from '../assets/Long-Term Partnerships/Healthcare Initiative.jpg';
+import './CSRSection.css';
 
 const csrImages = [
   { label: 'Community Outreach', image: communityOutreach },
@@ -29,11 +31,23 @@ export default function CSRSection() {
               <span className="csr-tag">Customer Focus</span>
               <span className="csr-tag">Sustainable Growth</span>
             </div>
+            <div className="csr-cta-row">
+              <Link to="/csr" className="btn-circle csr-btn-circle">
+                <span>Learn About Our Partnerships</span>
+                <span className="btn-circle-icon">
+                  <ArrowUpRight size={18} />
+                </span>
+              </Link>
+            </div>
           </div>
-          <div className="csr-images reveal-right">
+
+          <div className="csr-images-grid reveal-right">
             {csrImages.map((img, index) => (
-              <div key={index} className="csr-image">
-                <img src={img.image} alt={img.label} className="csr-image-photo" />
+              <div key={index} className="csr-card">
+                <img src={img.image} alt={img.label} className="csr-card-photo" />
+                <div className="csr-card-overlay">
+                  <span className="csr-card-label">{img.label}</span>
+                </div>
               </div>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import './Testimonials.css';
 
 const testimonials = [
@@ -48,13 +48,18 @@ export default function Testimonials() {
   return (
     <section className="testimonials">
       <div className="container">
+        <div className="testimonials-header reveal">
+          <span className="pill-badge">Client Trust</span>
+          <h2>What Our Customers Say</h2>
+        </div>
+
         <div className="testimonials-grid reveal">
           <div className="phone-mockup">
             <div className="phone-frame">
               <div className="phone-notch" />
               <div className="phone-screen">
                 <div className="chat-header">
-                  <div className="chat-avatar">IG</div>
+                  <div className="chat-avatar">AN</div>
                   <div className="chat-name">Antnira Group</div>
                 </div>
                 <div className="chat-container">
@@ -73,20 +78,31 @@ export default function Testimonials() {
           </div>
 
           <div className="testimonial-content">
-            <div className="testimonial-label">What Our Customers Say</div>
+            <div className="testimonial-quote-icon">
+              <Quote size={48} />
+            </div>
             <div className="testimonial-text" key={current}>
-              {testimonial.text}
+              "{testimonial.text}"
             </div>
             <div className="testimonial-footer">
               <div className="testimonial-counter">
-                {current + 1} <span>/ {testimonials.length}</span>
+                <strong>{String(current + 1).padStart(2, '0')}</strong>
+                <span> / {String(testimonials.length).padStart(2, '0')}</span>
               </div>
               <div className="testimonial-nav">
-                <button className="testimonial-nav-btn" onClick={goPrev} aria-label="Previous testimonial">
-                  <ArrowLeft />
+                <button
+                  className="testimonial-nav-btn"
+                  onClick={goPrev}
+                  aria-label="Previous testimonial"
+                >
+                  <ArrowLeft size={18} />
                 </button>
-                <button className="testimonial-nav-btn" onClick={goNext} aria-label="Next testimonial">
-                  <ArrowRight />
+                <button
+                  className="testimonial-nav-btn"
+                  onClick={goNext}
+                  aria-label="Next testimonial"
+                >
+                  <ArrowRight size={18} />
                 </button>
               </div>
             </div>

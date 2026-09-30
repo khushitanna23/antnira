@@ -1,38 +1,57 @@
 .page-banner {
-  background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-light-blue) 100%);
-  padding: 100px 0 60px;
+  background: radial-gradient(circle at 80% 20%, rgba(234, 168, 20, 0.08) 0%, transparent 50%),
+              linear-gradient(180deg, var(--bg-light) 0%, var(--bg-light-blue) 100%);
+  padding: clamp(60px, 8vw, 90px) 0 clamp(40px, 6vw, 65px);
   text-align: center;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.page-banner::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(234, 168, 20, 0.06) 0%, transparent 70%);
-  pointer-events: none;
+.page-banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.page-banner h1 {
-  margin-bottom: 12px;
+.page-banner-title {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.15;
   color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
 }
 
-.page-banner .breadcrumb {
-  font-size: 0.95rem;
-  color: var(--text-light);
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  background: var(--bg-white);
+  padding: 6px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
-.page-banner .breadcrumb a {
-  color: var(--brand-yellow);
+.breadcrumb a {
+  color: var(--text-secondary);
   font-weight: 500;
+  transition: color var(--transition-fast);
 }
 
-.page-banner .breadcrumb a:hover {
-  text-decoration: underline;
+.breadcrumb a:hover {
+  color: var(--brand-yellow);
+}
+
+.breadcrumb-separator {
+  color: var(--border-medium);
+  flex-shrink: 0;
+}
+
+.breadcrumb-current {
+  color: var(--brand-yellow);
+  font-weight: 600;
 }

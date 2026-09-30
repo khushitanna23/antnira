@@ -1,19 +1,18 @@
 .dealership-intro {
-  padding-top: 90px;
+  padding-top: var(--section-padding);
 }
 
 .dealership-intro-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 80px;
-  align-items: end;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
 }
 
 .dealership-intro h2 {
-  max-width: 720px;
-  margin-top: 20px;
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
-  line-height: 1.08;
+  margin-top: 18px;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  line-height: 1.12;
   color: var(--text-primary);
 }
 
@@ -25,28 +24,37 @@
 }
 
 .dealership-benefits {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: var(--section-padding);
 }
 
 .dealership-benefits-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 24px;
+  margin-top: 40px;
 }
 
 .dealership-benefit {
   min-height: 250px;
-  padding: 28px 24px;
+  padding: 34px 28px;
   border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
   background: var(--bg-white);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.dealership-benefit:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--brand-yellow);
 }
 
 .dealership-benefit svg,
 .dealership-process-card svg {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 28px;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 24px;
   color: var(--brand-yellow);
   stroke-width: 1.5;
 }
@@ -61,29 +69,39 @@
 
 .dealership-benefit p,
 .dealership-process-card p {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   line-height: 1.7;
   color: var(--text-secondary);
 }
 
 .dealership-products {
-  padding-top: 100px;
-  padding-bottom: 110px;
+  padding: var(--section-padding);
 }
 
 .dealership-products-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 28px;
+  margin-top: 40px;
 }
 
 .dealership-product {
   border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
   background: var(--bg-white);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.dealership-product:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--brand-yellow);
 }
 
 .dealership-product-image {
-  height: 260px;
+  height: 270px;
   overflow: hidden;
   background: var(--bg-light);
 }
@@ -93,22 +111,23 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dealership-product:hover img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .dealership-product-content {
-  padding: 24px;
+  padding: 30px 28px;
 }
 
 .dealership-product-content > span,
 .dealership-process-card > span {
   color: var(--brand-yellow);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .dealership-product-content h3 {
@@ -119,27 +138,36 @@
 }
 
 .dealership-product-content p {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   line-height: 1.7;
   color: var(--text-secondary);
 }
 
 .dealership-process {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: var(--section-padding);
 }
 
 .dealership-process-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 24px;
+  margin-top: 40px;
 }
 
 .dealership-process-card {
   min-height: 260px;
-  padding: 28px 24px;
+  padding: 34px 28px;
   border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
   background: var(--bg-white);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.dealership-process-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--brand-yellow);
 }
 
 .dealership-process-card svg {
@@ -148,35 +176,37 @@
 
 .dealership-process-card > span {
   display: block;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .dealership-cta {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding: var(--section-padding);
 }
 
 .dealership-cta-inner {
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
   gap: 40px;
-  padding: 44px;
+  padding: clamp(36px, 5vw, 60px);
+  border-radius: var(--radius-xl);
   background: var(--primary-dark);
   color: var(--text-white);
+  box-shadow: var(--shadow-xl);
 }
 
 .dealership-cta-inner .pill-badge {
   margin-bottom: 18px;
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.4);
   color: var(--text-white);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .dealership-cta-inner h2 {
   max-width: 680px;
   color: var(--text-white);
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1.1;
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  line-height: 1.15;
 }
 
 @media (max-width: 1024px) {
@@ -187,41 +217,21 @@
   }
 
   .dealership-intro-grid {
+    grid-template-columns: 1fr;
     gap: 40px;
   }
 }
 
 @media (max-width: 768px) {
-  .dealership-intro {
-    padding-top: 60px;
-  }
-
-  .dealership-intro-grid,
   .dealership-benefits-grid,
   .dealership-products-grid,
   .dealership-process-grid {
     grid-template-columns: 1fr;
   }
 
-  .dealership-intro-grid {
-    gap: 30px;
-  }
-
-  .dealership-benefits,
-  .dealership-products,
-  .dealership-process {
-    padding-top: 70px;
-    padding-bottom: 70px;
-  }
-
-  .dealership-cta {
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
-
   .dealership-cta-inner {
-    align-items: flex-start;
     flex-direction: column;
-    padding: 28px 24px;
+    align-items: flex-start;
+    padding: 32px 24px;
   }
 }

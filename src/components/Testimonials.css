@@ -1,28 +1,38 @@
 .testimonials {
   padding: var(--section-padding);
   background: var(--bg-light-blue);
+  border-bottom: 1px solid var(--border-subtle);
   overflow: hidden;
+}
+
+.testimonials-header {
+  margin-bottom: 48px;
+}
+
+.testimonials-header h2 {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  margin-top: 6px;
 }
 
 .testimonials-grid {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 60px;
+  grid-template-columns: 360px 1fr;
+  gap: clamp(40px, 6vw, 80px);
   align-items: center;
 }
 
 /* Phone Mockup */
 .phone-mockup {
   position: relative;
-  width: 280px;
+  width: 300px;
   margin: 0 auto;
 }
 
 .phone-frame {
-  background: #1a1a1a;
-  border-radius: 36px;
+  background: #111315;
+  border-radius: 40px;
   padding: 12px;
-  box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
@@ -32,28 +42,27 @@
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
-  height: 28px;
-  background: #1a1a1a;
-  border-radius: 0 0 16px 16px;
-  z-index: 2;
+  height: 24px;
+  background: #111315;
+  border-radius: 0 0 14px 14px;
+  z-index: 3;
 }
 
 .phone-screen {
   background: #e5ddd5;
-  border-radius: 26px;
+  border-radius: 30px;
   overflow: hidden;
   aspect-ratio: 9/16;
   position: relative;
 }
 
-/* Chat simulation */
 .chat-container {
-  padding: 50px 12px 60px;
+  padding: 60px 14px 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .chat-header {
@@ -61,40 +70,41 @@
   top: 0;
   left: 0;
   right: 0;
-  background: #075e54;
+  background: #0f1c24;
   color: white;
-  padding: 32px 12px 10px;
+  padding: 34px 14px 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  z-index: 1;
+  gap: 10px;
+  z-index: 2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chat-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--brand-yellow);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: white;
+  color: var(--primary-dark);
 }
 
 .chat-name {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .chat-bubble {
-  max-width: 85%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.7rem;
-  line-height: 1.4;
-  position: relative;
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .chat-bubble.sent {
@@ -110,10 +120,10 @@
 }
 
 .chat-time {
-  font-size: 0.55rem;
-  color: #999;
+  font-size: 0.6rem;
+  color: #888;
   text-align: right;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .phone-home-indicator {
@@ -121,46 +131,52 @@
   height: 4px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 2px;
-  margin: 8px auto 0;
+  margin: 10px auto 2px;
 }
 
 /* Testimonial Content */
 .testimonial-content {
+  background: var(--bg-white);
+  padding: clamp(36px, 5vw, 54px);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-lg);
   position: relative;
 }
 
-.testimonial-label {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 24px;
+.testimonial-quote-icon {
+  color: var(--brand-yellow);
+  opacity: 0.6;
+  margin-bottom: 20px;
 }
 
 .testimonial-text {
   font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-  font-weight: 400;
-  line-height: 1.5;
+  font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.55;
   color: var(--text-primary);
-  margin-bottom: 40px;
-  min-height: 150px;
+  margin-bottom: 36px;
+  min-height: 130px;
 }
 
 .testimonial-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid var(--border-light);
+  padding-top: 24px;
 }
 
-.testimonial-counter {
+.testimonial-counter strong {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--brand-yellow);
 }
 
 .testimonial-counter span {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
 }
 
@@ -170,48 +186,33 @@
 }
 
 .testimonial-nav-btn {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  border: 1px solid var(--border-medium);
+  border: 1.5px solid var(--border-medium);
   background: var(--bg-white);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-base);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
 }
 
 .testimonial-nav-btn:hover {
   background: var(--primary-dark);
-  color: var(--text-white);
+  color: var(--brand-yellow);
   border-color: var(--primary-dark);
-}
-
-.testimonial-nav-btn svg {
-  width: 18px;
-  height: 18px;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 1024px) {
-  .testimonials-grid {
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
   .phone-mockup {
-    width: 240px;
-  }
-
-  .testimonial-text {
-    min-height: auto;
-    margin-bottom: 24px;
+    margin: 0 auto;
   }
 }
