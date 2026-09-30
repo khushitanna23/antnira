@@ -55,8 +55,6 @@ const navItems = [
     type: 'dropdown',
     label: 'Utilities',
     items: [
-      { label: 'Technical Details', path: '/technical-details' },
-      { label: 'Packaging Details', path: '/packaging-details' },
       { label: 'Export', path: '/export' },
       { label: 'Blog', path: '/blog' },
     ],
@@ -65,7 +63,8 @@ const navItems = [
     type: 'dropdown',
     label: 'Resources',
     items: [
-      { label: 'Export', path: '/export' },
+      { label: 'Technical Details', path: '/technical-details' },
+      { label: 'Packaging Details', path: '/packaging-details' },
     ],
   },
 ];

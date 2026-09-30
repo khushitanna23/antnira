@@ -41,7 +41,7 @@ export default function TechnicalDetails() {
 
   return (
     <>
-      <PageBanner title="Technical Details" breadcrumb="Utilities" />
+      <PageBanner title="Technical Details" breadcrumb="Resources" />
 
       <section className="page-section">
         <div className="container">

@@ -44,7 +44,7 @@ export default function PackagingDetails() {
 
   return (
     <>
-      <PageBanner title="Packaging Details" breadcrumb="Utilities" />
+      <PageBanner title="Packaging Details" breadcrumb="Resources" />
 
       <section className="page-section">
         <div className="container">
