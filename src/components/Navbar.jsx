@@ -1,23 +1,81 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, X, Phone, Mail, MapPin } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, X, Phone, Mail, MapPin } from 'lucide-react';
 import logo from '../assets/logo-white.png';
 import './Navbar.css';
 
 const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Collection', path: '/#collection' },
-  { label: 'Company', path: '/about' },
-  { label: 'Workshop', path: '/workshop' },
-  { label: 'Why Us', path: '/why-us' },
-  { label: 'Our Customers', path: '/customers' },
-  { label: 'Dealership', path: '/dealership' },
-  { label: 'CSR', path: '/csr' },
+  {
+    type: 'link',
+    label: 'Home',
+    path: '/',
+  },
+  {
+    type: 'mega',
+    label: 'Collection',
+    path: '/#collection',
+    columns: [
+      {
+        heading: 'Healthcare Uniforms',
+        items: [
+          { label: 'Medical Scrubs', path: '/#collection' },
+          { label: 'Doctor Uniforms', path: '/#collection' },
+          { label: 'Nurse Uniforms', path: '/#collection' },
+          { label: 'Lab Coats & Laboratory Uniforms', path: '/#collection' },
+          { label: 'Ward Boy & Hospital Staff Uniforms', path: '/#collection' },
+          { label: 'Patient Wear', path: '/#collection' },
+          { label: 'Hospital Accessories', path: '/#collection' },
+        ],
+      },
+      {
+        heading: 'Custom T-Shirts',
+        items: [
+          { label: 'Custom Round-Neck T-Shirts', path: '/#collection' },
+          { label: 'Custom Polo T-Shirts', path: '/#collection' },
+          { label: 'Corporate T-Shirts', path: '/#collection' },
+          { label: 'Promotional T-Shirts', path: '/#collection' },
+          { label: 'Event & Team T-Shirts', path: '/#collection' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'dropdown',
+    label: 'Corporate',
+    items: [
+      { label: 'About', path: '/about' },
+      { label: 'Why ANTNIRA', path: '/why-us' },
+      { label: 'Workshop', path: '/workshop' },
+      { label: 'Our Customer', path: '/customers' },
+      { label: 'Dealership', path: '/dealership' },
+      { label: 'Certificate', path: '/certificate' },
+    ],
+  },
+  {
+    type: 'dropdown',
+    label: 'Utilities',
+    items: [
+      { label: 'Technical Details', path: '/technical-details' },
+      { label: 'Packaging Details', path: '/packaging-details' },
+      { label: 'Export', path: '/export' },
+      { label: 'Blog', path: '/blog' },
+    ],
+  },
+  {
+    type: 'dropdown',
+    label: 'Resources',
+    items: [
+      { label: 'Export', path: '/export' },
+    ],
+  },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileExpanded, setMobileExpanded] = useState({});
+  const timeoutRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -33,19 +91,41 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  // Dropdown dismissals are handled by handleNavClick and mouse leave events
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
   const closeMenu = () => {
     setIsOpen(false);
+    setActiveDropdown(null);
   };
 
-  const handleNavClick = (e, item) => {
+  const handleMouseEnter = (label) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  };
+
+  const toggleMobileAccordion = (label) => {
+    setMobileExpanded((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
+
+  const handleNavClick = (e, targetPath) => {
     closeMenu();
-    if (item.path.includes('#')) {
-      const hash = item.path.split('#')[1];
-      if (location.pathname === '/') {
+    if (targetPath && targetPath.includes('#')) {
+      const [path, hash] = targetPath.split('#');
+      if (location.pathname === (path || '/')) {
         e.preventDefault();
         window.history.pushState(null, '', `/#${hash}`);
         const el = document.getElementById(hash);
@@ -56,11 +136,20 @@ export default function Navbar() {
     }
   };
 
-  const isItemActive = (item) => {
-    if (item.path.includes('#')) {
-      return location.hash === `#${item.path.split('#')[1]}`;
+  const isNavActive = (item) => {
+    if (item.type === 'link') {
+      if (item.path.includes('#')) {
+        return location.pathname === '/' && location.hash === `#${item.path.split('#')[1]}`;
+      }
+      return location.pathname === item.path && !location.hash;
     }
-    return location.pathname === item.path && !location.hash;
+    if (item.type === 'dropdown') {
+      return item.items.some((sub) => location.pathname === sub.path);
+    }
+    if (item.type === 'mega') {
+      return location.hash === '#collection';
+    }
+    return false;
   };
 
   return (
@@ -72,17 +161,101 @@ export default function Navbar() {
             <span className="nav-logo-tagline">Committed to Your Growth</span>
           </Link>
 
+          {/* Desktop Navigation Links */}
           <div className="nav-links">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className={`nav-link ${isItemActive(item) ? 'active' : ''}`}
-                onClick={(e) => handleNavClick(e, item)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.type === 'link') {
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className={`nav-link ${isNavActive(item) ? 'active' : ''}`}
+                    onClick={(e) => handleNavClick(e, item.path)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              }
+
+              if (item.type === 'mega') {
+                const isDropdownOpen = activeDropdown === item.label;
+                return (
+                  <div
+                    key={item.label}
+                    className={`nav-dropdown-wrapper ${isDropdownOpen ? 'open' : ''}`}
+                    onMouseEnter={() => handleMouseEnter(item.label)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      type="button"
+                      className={`nav-link nav-dropdown-trigger ${isNavActive(item) ? 'active' : ''}`}
+                      onClick={() => setActiveDropdown(isDropdownOpen ? null : item.label)}
+                      aria-expanded={isDropdownOpen}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
+                    </button>
+
+                    <div className={`nav-mega-menu ${isDropdownOpen ? 'show' : ''}`}>
+                      <div className="mega-menu-grid">
+                        {item.columns.map((col, colIdx) => (
+                          <div key={colIdx} className="mega-menu-column">
+                            <span className="mega-column-title">{col.heading}</span>
+                            <ul className="mega-column-list">
+                              {col.items.map((subItem, sIdx) => (
+                                <li key={sIdx}>
+                                  <Link
+                                    to={subItem.path}
+                                    className="mega-menu-link"
+                                    onClick={(e) => handleNavClick(e, subItem.path)}
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              // Standard Dropdown (Corporate, Utilities, Resources)
+              const isDropdownOpen = activeDropdown === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className={`nav-dropdown-wrapper ${isDropdownOpen ? 'open' : ''}`}
+                  onMouseEnter={() => handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <button
+                    type="button"
+                    className={`nav-link nav-dropdown-trigger ${isNavActive(item) ? 'active' : ''}`}
+                    onClick={() => setActiveDropdown(isDropdownOpen ? null : item.label)}
+                    aria-expanded={isDropdownOpen}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
+                  </button>
+
+                  <div className={`nav-dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
+                    {item.items.map((subItem) => (
+                      <Link
+                        key={subItem.label}
+                        to={subItem.path}
+                        className={`nav-dropdown-item ${location.pathname === subItem.path ? 'active' : ''}`}
+                        onClick={(e) => handleNavClick(e, subItem.path)}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="nav-actions">
@@ -125,17 +298,87 @@ export default function Navbar() {
         </div>
 
         <div className="drawer-nav">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.path}
-              className={`drawer-link ${isItemActive(item) ? 'active' : ''}`}
-              onClick={(e) => handleNavClick(e, item)}
-            >
-              {item.label}
-              <ArrowUpRight size={16} className="drawer-link-arrow" />
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            if (item.type === 'link') {
+              return (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className={`drawer-link ${isNavActive(item) ? 'active' : ''}`}
+                  onClick={(e) => handleNavClick(e, item.path)}
+                >
+                  {item.label}
+                  <ArrowUpRight size={16} className="drawer-link-arrow" />
+                </Link>
+              );
+            }
+
+            if (item.type === 'mega') {
+              const isExpanded = !!mobileExpanded[item.label];
+              return (
+                <div key={item.label} className="drawer-accordion-group">
+                  <button
+                    type="button"
+                    className={`drawer-accordion-trigger ${isNavActive(item) ? 'active' : ''}`}
+                    onClick={() => toggleMobileAccordion(item.label)}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown size={18} className={`drawer-chevron ${isExpanded ? 'rotate' : ''}`} />
+                  </button>
+
+                  {isExpanded && (
+                    <div className="drawer-accordion-content">
+                      {item.columns.map((col, cIdx) => (
+                        <div key={cIdx} className="drawer-mega-col">
+                          <span className="drawer-mega-heading">{col.heading}</span>
+                          {col.items.map((subItem, sIdx) => (
+                            <Link
+                              key={sIdx}
+                              to={subItem.path}
+                              className="drawer-sub-link"
+                              onClick={(e) => handleNavClick(e, subItem.path)}
+                            >
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            // Dropdown items (Corporate, Utilities, Resources)
+            const isExpanded = !!mobileExpanded[item.label];
+            return (
+              <div key={item.label} className="drawer-accordion-group">
+                <button
+                  type="button"
+                  className={`drawer-accordion-trigger ${isNavActive(item) ? 'active' : ''}`}
+                  onClick={() => toggleMobileAccordion(item.label)}
+                >
+                  <span>{item.label}</span>
+                  <ChevronDown size={18} className={`drawer-chevron ${isExpanded ? 'rotate' : ''}`} />
+                </button>
+
+                {isExpanded && (
+                  <div className="drawer-accordion-content">
+                    {item.items.map((subItem) => (
+                      <Link
+                        key={subItem.label}
+                        to={subItem.path}
+                        className={`drawer-sub-link ${location.pathname === subItem.path ? 'active' : ''}`}
+                        onClick={(e) => handleNavClick(e, subItem.path)}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className="drawer-cta-wrapper">

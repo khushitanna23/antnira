@@ -13,6 +13,11 @@ import Customers from './pages/Customers';
 import CSR from './pages/CSR';
 import Contact from './pages/Contact';
 import Dealership from './pages/Dealership';
+import Export from './pages/Export';
+import TechnicalDetails from './pages/TechnicalDetails';
+import PackagingDetails from './pages/PackagingDetails';
+import Blog from './pages/Blog';
+import Certificate from './pages/Certificate';
 import { Analytics } from '@vercel/analytics/react';
 
 function ScrollToTopOnNav() {
@@ -48,6 +53,11 @@ function App() {
           <Route path="/csr" element={<CSR />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dealership" element={<Dealership />} />
+          <Route path="/export" element={<Export />} />
+          <Route path="/technical-details" element={<TechnicalDetails />} />
+          <Route path="/packaging-details" element={<PackagingDetails />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/certificate" element={<Certificate />} />
         </Routes>
       </main>
       <Analytics />
