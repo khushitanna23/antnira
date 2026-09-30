@@ -67,6 +67,11 @@ const navItems = [
       { label: 'Packaging Details', path: '/packaging-details' },
     ],
   },
+  {
+    type: 'link',
+    label: 'CSR',
+    path: '/csr',
+  },
 ];
 
 export default function Navbar() {
