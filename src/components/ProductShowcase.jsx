@@ -73,7 +73,7 @@ const sliderImages = [
 
 export default function ProductShowcase() {
   return (
-    <section className="product-showcase-section">
+    <section className="product-showcase-section" id="collection">
       <div className="container">
         {/* Top Header matching Image 1 Reference Structure */}
         <div className="product-showcase-header reveal">

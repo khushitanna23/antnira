@@ -6,6 +6,7 @@ import './Navbar.css';
 
 const navItems = [
   { label: 'Home', path: '/' },
+  { label: 'Collection', path: '/#collection' },
   { label: 'Company', path: '/about' },
   { label: 'Workshop', path: '/workshop' },
   { label: 'Why Us', path: '/why-us' },
@@ -25,15 +26,41 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const toggleMenu = () => {
-    const nextState = !isOpen;
-    setIsOpen(nextState);
-    document.body.style.overflow = nextState ? 'hidden' : '';
+    setIsOpen((prev) => !prev);
   };
 
   const closeMenu = () => {
     setIsOpen(false);
-    document.body.style.overflow = '';
+  };
+
+  const handleNavClick = (e, item) => {
+    closeMenu();
+    if (item.path.includes('#')) {
+      const hash = item.path.split('#')[1];
+      if (location.pathname === '/') {
+        e.preventDefault();
+        window.history.pushState(null, '', `/#${hash}`);
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
+
+  const isItemActive = (item) => {
+    if (item.path.includes('#')) {
+      return location.hash === `#${item.path.split('#')[1]}`;
+    }
+    return location.pathname === item.path && !location.hash;
   };
 
   return (
@@ -48,9 +75,10 @@ export default function Navbar() {
           <div className="nav-links">
             {navItems.map((item) => (
               <Link
-                key={item.path}
+                key={item.label}
                 to={item.path}
-                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                className={`nav-link ${isItemActive(item) ? 'active' : ''}`}
+                onClick={(e) => handleNavClick(e, item)}
               >
                 {item.label}
               </Link>
@@ -99,10 +127,10 @@ export default function Navbar() {
         <div className="drawer-nav">
           {navItems.map((item) => (
             <Link
-              key={item.path}
+              key={item.label}
               to={item.path}
-              className={`drawer-link ${location.pathname === item.path ? 'active' : ''}`}
-              onClick={closeMenu}
+              className={`drawer-link ${isItemActive(item) ? 'active' : ''}`}
+              onClick={(e) => handleNavClick(e, item)}
             >
               {item.label}
               <ArrowUpRight size={16} className="drawer-link-arrow" />
